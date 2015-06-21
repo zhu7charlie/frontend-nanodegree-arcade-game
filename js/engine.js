@@ -48,6 +48,8 @@ var Engine = (function(global) {
         update(dt);
         render();
 
+        if( won ) return;
+
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
          */
@@ -80,7 +82,6 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
     }
 
     /* This is called by the update function  and loops through all of the
@@ -123,21 +124,31 @@ var Engine = (function(global) {
          * and, using the rowImages array, draw the correct image for that
          * portion of the "grid"
          */
-        for (row = 0; row < numRows; row++) {
-            for (col = 0; col < numCols; col++) {
-                /* The drawImage function of the canvas' context element
-                 * requires 3 parameters: the image to draw, the x coordinate
-                 * to start drawing and the y coordinate to start drawing.
-                 * We're using our Resources helpers to refer to our images
-                 * so that we get the benefits of caching these images, since
-                 * we're using them over and over.
-                 */
-                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+
+        /* render gameOver & gameWon images */
+        if( collision ) {
+            //ctx.drawImage(Resources.get('images/gameOver.jpg'),0,50,canvas.width,canvas.width);
+        } else if( won ) {
+            ctx.drawImage(Resources.get('images/gameWon.jpg'),0,50,canvas.width,canvas.height);
+        } else {
+
+            for (row = 0; row < numRows; row++) {
+                for (col = 0; col < numCols; col++) {
+                    /* The drawImage function of the canvas' context element
+                     * requires 3 parameters: the image to draw, the x coordinate
+                     * to start drawing and the y coordinate to start drawing.
+                     * We're using our Resources helpers to refer to our images
+                     * so that we get the benefits of caching these images, since
+                     * we're using them over and over.
+                     */
+                    ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+                }
             }
+
+            renderEntities();
+
         }
 
-
-        renderEntities();
     }
 
     /* This function is called by the render function and is called on each game
@@ -172,7 +183,13 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/gameOver.jpg',
+        'images/gameWon.jpg',
+        'images/gameOver01.jpg',
+        'images/gameWon01.jpg',
+        'images/udacity.jpg',
+        'images/udacity01.jpg'
     ]);
     Resources.onReady(init);
 
@@ -181,4 +198,6 @@ var Engine = (function(global) {
      * from within their app.js files.
      */
     global.ctx = ctx;
+    global.canvas = canvas;
+
 })(this);
