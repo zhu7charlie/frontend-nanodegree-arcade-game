@@ -8,7 +8,7 @@ for self-checking their submission.
 --------------------------
 
 submited on June 21, 2015 as zip file:
-frontend-nanodegree-arcade-game-master.zip
+frontend-nanodegree-arcade-game-master_02.zip
 
 code is under my GitHub rerository:
 https://github.com/zhu7charlie/frontend-nanodegree-arcade-game
